@@ -6,20 +6,64 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Digital Signage Menu</title>
     <style>
-        /* Style as needed */
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             padding: 20px;
+            margin: 0;
+            background-color: #121212;
+            color: #f4f4f4;
+            overflow: hidden; /* Avoid scroll on TV */
+        }
+
+        #menu {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 20px; /* Spacing between categories */
         }
 
         .category {
-            font-weight: bold;
-            margin-top: 20px;
+            flex: 0 0 48%; /* Two columns, accounting for some margin */
+            border: 1px solid #0077b6; /* Blue border */
+            border-radius: 15px;
+            padding: 20px;
+            background: linear-gradient(145deg, #1f1f1f, #272727); /* Subtle gradient background */
+            box-shadow: 5px 5px 15px #0a0a0a, -5px -5px 15px #363636; /* Neumorphism style shadow */
+        }
+
+        .category-title {
+            font-size: 40px;
+            color: #0077b6; /* Blue category name */
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2); /* Subtle text shadow for depth */
+            margin-bottom: 20px;
+            border-bottom: 2px solid #0077b6;
+            padding-bottom: 10px;
         }
 
         .item {
-            margin-left: 20px;
+            font-size: 32px; /* Large font for TV display */
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            color: #fff;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
         }
+
+        .item-price {
+            color: #77c1f0; /* Lighter blue for price */
+            font-weight: bold;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+        }
+
+        @media screen and (max-width: 1000px) {
+            /* Adjustments for smaller screens, like for previewing on a computer monitor */
+            .category {
+                flex: 0 0 100%;
+            }
+        }
+
+
+
     </style>
 </head>
 
@@ -33,26 +77,42 @@
             .then(data => {
                 let menuDiv = document.getElementById('menu');
 
-                // Looping through categories
-                data.forEach(cat => {
-                    let catDiv = document.createElement('div');
-                    catDiv.classList.add('category');
-                    catDiv.innerText = cat.category;
+                
 
-                    // Looping through items in a category
-                    cat.items.forEach(item => {
-                        let itemDiv = document.createElement('div');
-                        itemDiv.classList.add('item');
-                        itemDiv.innerHTML = `<b>${item.name}</b>: ${item.price}`;
-                        catDiv.appendChild(itemDiv);
-                    });
+            // Looping through categories
+            data.forEach(cat => {
+                let catDiv = document.createElement('div');
+                catDiv.classList.add('category');
 
-                    menuDiv.appendChild(catDiv);
+                // Adding category title
+                let catTitle = document.createElement('div');
+                catTitle.classList.add('category-title');
+                catTitle.innerText = cat.category;
+                catDiv.appendChild(catTitle);
+
+                // Looping through items in a category
+                cat.items.forEach(item => {
+                    let itemDiv = document.createElement('div');
+                    itemDiv.classList.add('item');
+
+                    let itemName = document.createElement('span');
+                    itemName.innerText = item.name;
+                    itemDiv.appendChild(itemName);
+
+                    let itemPrice = document.createElement('span');
+                    itemPrice.classList.add('item-price');
+                    itemPrice.innerText = item.price;
+                    itemDiv.appendChild(itemPrice);
+
+                    catDiv.appendChild(itemDiv);
                 });
-            })
-            .catch(error => {
-                console.error("Error fetching menu data: ", error);
+
+                menuDiv.appendChild(catDiv);
             });
+        })
+        .catch(error => {
+            console.error("Error fetching menu data: ", error);
+        });
     </script>
 </body>
 
