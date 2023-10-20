@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Signage Menu</title>
+    <style>
+        /* Style as needed */
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+
+        .category {
+            font-weight: bold;
+            margin-top: 20px;
+        }
+
+        .item {
+            margin-left: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="menu"></div>
+
+    <script>
+        // Fetching the JSON data from GitHub
+        fetch('https://raw.githubusercontent.com/mkgillespie/menu/master/menu.json')
+            .then(response => response.json())
+            .then(data => {
+                let menuDiv = document.getElementById('menu');
+
+                // Looping through categories
+                data.forEach(cat => {
+                    let catDiv = document.createElement('div');
+                    catDiv.classList.add('category');
+                    catDiv.innerText = cat.category;
+
+                    // Looping through items in a category
+                    cat.items.forEach(item => {
+                        let itemDiv = document.createElement('div');
+                        itemDiv.classList.add('item');
+                        itemDiv.innerHTML = `<b>${item.name}</b>: ${item.price}`;
+                        catDiv.appendChild(itemDiv);
+                    });
+
+                    menuDiv.appendChild(catDiv);
+                });
+            })
+            .catch(error => {
+                console.error("Error fetching menu data: ", error);
+            });
+    </script>
+</body>
+
+</html>

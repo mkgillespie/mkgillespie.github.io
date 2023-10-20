@@ -1,0 +1,4 @@
+[
+    {"category": "Beverages", "items": [{"name": "Coffee", "price": "$2.00"}, {"name": "Tea", "price": "$1.50"}]},
+    {"category": "Desserts", "items": [{"name": "Cake", "price": "$4.00"}, {"name": "Pie", "price": "$3.50"}]}
+]
