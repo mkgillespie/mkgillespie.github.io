@@ -85,7 +85,7 @@ body {
 
     <script>
         // Fetching the JSON data from GitHub
-        fetch('https://raw.githubusercontent.com/mkgillespie/menu/main/menu.json')
+        fetch('/menu.json')
             .then(response => response.json())
             .then(data => {
                 let menuDiv = document.getElementById('menu');
@@ -93,6 +93,11 @@ body {
     
                 // Looping through categories
                 data.forEach(cat => {
+                    let itemsToShow = cat.items.filter(item => !item.daysVisible || item.daysVisible.includes(today));
+                    
+                    // If there are no items to show for this category on this day, skip to the next category
+                    if (itemsToShow.length === 0) return;
+    
                     let catDiv = document.createElement('div');
                     catDiv.classList.add('category');
     
@@ -103,24 +108,20 @@ body {
                     catDiv.appendChild(catTitle);
     
                     // Looping through items in a category
-                    cat.items.forEach(item => {
-                        // Check visibility based on day
-                        console.log(item);
-                        if (!item.daysVisible || item.daysVisible.includes(today)) {
-                            let itemDiv = document.createElement('div');
-                            itemDiv.classList.add('item');
+                    itemsToShow.forEach(item => {
+                        let itemDiv = document.createElement('div');
+                        itemDiv.classList.add('item');
     
-                            let itemName = document.createElement('span');
-                            itemName.innerText = item.name;
-                            itemDiv.appendChild(itemName);
+                        let itemName = document.createElement('span');
+                        itemName.innerText = item.name;
+                        itemDiv.appendChild(itemName);
     
-                            let itemPrice = document.createElement('span');
-                            itemPrice.classList.add('item-price');
-                            itemPrice.innerText = item.price;
-                            itemDiv.appendChild(itemPrice);
+                        let itemPrice = document.createElement('span');
+                        itemPrice.classList.add('item-price');
+                        itemPrice.innerText = item.price;
+                        itemDiv.appendChild(itemPrice);
     
-                            catDiv.appendChild(itemDiv);
-                        }
+                        catDiv.appendChild(itemDiv);
                     });
     
                     menuDiv.appendChild(catDiv);
@@ -130,6 +131,7 @@ body {
                 console.error("Error fetching menu data: ", error);
             });
     </script>
+    
     
 </body>
 
