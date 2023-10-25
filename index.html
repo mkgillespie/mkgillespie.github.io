@@ -89,44 +89,48 @@ body {
             .then(response => response.json())
             .then(data => {
                 let menuDiv = document.getElementById('menu');
-
-                
-
-            // Looping through categories
-            data.forEach(cat => {
-                let catDiv = document.createElement('div');
-                catDiv.classList.add('category');
-
-                // Adding category title
-                let catTitle = document.createElement('div');
-                catTitle.classList.add('category-title');
-                catTitle.innerText = cat.category;
-                catDiv.appendChild(catTitle);
-
-                // Looping through items in a category
-                cat.items.forEach(item => {
-                    let itemDiv = document.createElement('div');
-                    itemDiv.classList.add('item');
-
-                    let itemName = document.createElement('span');
-                    itemName.innerText = item.name;
-                    itemDiv.appendChild(itemName);
-
-                    let itemPrice = document.createElement('span');
-                    itemPrice.classList.add('item-price');
-                    itemPrice.innerText = item.price;
-                    itemDiv.appendChild(itemPrice);
-
-                    catDiv.appendChild(itemDiv);
+                const today = new Date().toLocaleString('en-US', { weekday: 'long' });
+    
+                // Looping through categories
+                data.forEach(cat => {
+                    let catDiv = document.createElement('div');
+                    catDiv.classList.add('category');
+    
+                    // Adding category title
+                    let catTitle = document.createElement('div');
+                    catTitle.classList.add('category-title');
+                    catTitle.innerText = cat.category;
+                    catDiv.appendChild(catTitle);
+    
+                    // Looping through items in a category
+                    cat.items.forEach(item => {
+                        // Check visibility based on day
+                        console.log(item);
+                        if (!item.daysVisible || item.daysVisible.includes(today)) {
+                            let itemDiv = document.createElement('div');
+                            itemDiv.classList.add('item');
+    
+                            let itemName = document.createElement('span');
+                            itemName.innerText = item.name;
+                            itemDiv.appendChild(itemName);
+    
+                            let itemPrice = document.createElement('span');
+                            itemPrice.classList.add('item-price');
+                            itemPrice.innerText = item.price;
+                            itemDiv.appendChild(itemPrice);
+    
+                            catDiv.appendChild(itemDiv);
+                        }
+                    });
+    
+                    menuDiv.appendChild(catDiv);
                 });
-
-                menuDiv.appendChild(catDiv);
+            })
+            .catch(error => {
+                console.error("Error fetching menu data: ", error);
             });
-        })
-        .catch(error => {
-            console.error("Error fetching menu data: ", error);
-        });
     </script>
+    
 </body>
 
 </html>
