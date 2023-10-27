@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;800&display=swap" rel="stylesheet">
+    <title>Random Review Display</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url("img/bg.svg");
+            background-size: cover;
+            background-repeat: no-repeat;
+            margin: 0;
+            font-family: 'Raleway', sans-serif;
+        }
+        .mainDiv {
+            display: flex;
+            height: 100vh;
+            align-items: center;
+            
+        }
+        .reviewContainer {
+            max-width: 50%;
+            margin: 0 auto;
+            text-align: center;
+            padding: 5%;
+            border-radius: 2vw;
+            background-color: rgba(1,79,159, 0.8);
+            color: #fff;
+            position: relative;
+        }
+        .title {
+            font-size: 2vw;
+            margin-bottom: 20px;
+            font-weight: 800;
+        }
+        .review {
+            font-size: 1.2vw;
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+        .meta {
+            font-size: 1vw;
+            font-weight: 400;
+        }
+        .checked {
+            color: orange;
+        }
+        .fa {
+            font-size: 2vw;
+            padding-right: 10px;
+        }
+        #starRating {
+            margin-bottom: 20px;
+        }
+        .logo {
+            position: absolute;
+            top: -210px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 210px;
+        }
+    </style>
+</head>
+<body>
+    <div class="mainDiv">
+        
+        <div class="reviewContainer">
+            <img src="img/logo.svg" class="logo" />
+            <div id="starRating"></div>
+            <div class="title" id="title"></div>
+            <div class="review" id="review"></div>
+            <div class="meta" id="meta"></div>
+        </div>
+    </div>
+
+    <script>
+        function formatReviewContent(content) {
+            // Split the content based on <br />
+            const lines = content.split('<br />').map(line => line.trim()).filter(line => line !== '');
+
+            // Wrap each line in a <p> tag
+            const formattedLines = lines.map(line => `<p>${line}</p>`);
+
+            // Combine the lines back into a single string
+            return formattedLines.join('');
+        }
+
+        function toTitleCase(str) {
+            return str.replace(/\w\S*/g, function(word) {
+                return word.charAt(0).toUpperCase() + word.substr(1).toLowerCase();
+            });
+        }
+
+
+
+        fetch('./reviews.json')
+            .then(response => response.json())
+            .then(data => {
+                // Get a random review (no filter for 5-stars)
+                const randomReview = data[Math.floor(Math.random() * data.length)];
+
+                // Generate star rating
+                let stars = "";
+                for(let i = 1; i <= 5; i++) {
+                    if(i <= randomReview.rating) {
+                        stars += '<span class="fa fa-star checked"></span>';
+                    } else {
+                        stars += '<span class="fa fa-star"></span>';
+                    }
+                }
+                document.getElementById('starRating').innerHTML = stars;
+
+                // Display the review details
+                document.getElementById('title').innerText = randomReview.review_summary;
+                document.getElementById('review').innerHTML = formatReviewContent(randomReview.review);
+                document.getElementById('meta').innerText = `${randomReview.review_date} - ${toTitleCase(randomReview.customer_name)} - ${randomReview.product}`;
+               
+            });
+    </script>
+</body>
+</html>
