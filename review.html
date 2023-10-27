@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Review Display</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .title {
+            font-size: 24px;
+        }
+        .review {
+            font-size: 18px;
+        }
+        .meta {
+            font-size: 14px;
+        }
+        .product {
+            font-size: 16px;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="title" id="title"></div>
+    <div class="review" id="review"></div>
+    <div class="meta" id="meta"></div>
+    <div class="product" id="product"></div>  <!-- New div for product -->
+
+    <script>
+        fetch('./reviews.json')
+            .then(response => response.json())
+            .then(data => {
+                // Filter out reviews that are not 5 stars
+                const fiveStarReviews = data.filter(item => item.rating === '5');
+                
+                // Get a random 5-star review
+                const randomReview = fiveStarReviews[Math.floor(Math.random() * fiveStarReviews.length)];
+
+                // Display the review
+                document.getElementById('title').innerText = `${randomReview.review_summary} - ${randomReview.rating} Stars`;
+                document.getElementById('review').innerText = randomReview.review;
+                document.getElementById('meta').innerText = `${randomReview.review_date} - ${randomReview.customer_name}`;
+                document.getElementById('product').innerText = `Product: ${randomReview.product}`;  // Display the product
+            });
+    </script>
+</body>
+</html>
