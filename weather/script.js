@@ -38,7 +38,7 @@ function fetchWaterTempData() {
 
 function fetchLastUpdatedTime() {
     // Replace with the API URL for your repository
-    const commitApiUrl = 'https://api.github.com/repos/mkgillespie/mkgillespie.github.io/commits?path=water_temp.json&page=1&per_page=1';
+    const commitApiUrl = 'https://api.github.com/repos/mkgillespie/mkgillespie.github.io/commits?path=weather/water_temp.json&page=1&per_page=1';
 
     fetch(commitApiUrl)
         .then(response => response.json())
