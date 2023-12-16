@@ -1,0 +1,98 @@
+body {
+    font-family: 'Inter', 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: #f7f7f7;
+    transition: background-color 0.3s;
+    position: relative;
+    /* background-image: url('./icons/waves.svg'); 
+    background-position: bottom center;
+    background-repeat: no-repeat; */
+    letter-spacing: -0.06em;
+  }
+  
+  .weather-app {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .weather-card, .water-temp-card {
+    text-align: center;
+  }
+
+  .water-temp-card {
+    margin-top: 3em;
+  }
+  
+  .temperature {
+    font-size: 8em;
+    color: #fff;
+    font-weight: bold;
+    text-shadow: 0px 0px 5px rgba(0,0,0,0.2);
+  }
+  
+  .description {
+    font-size: 1.2em;
+    color: #666;
+  }
+  
+  .location {
+    font-size: 1.5em;
+    color: #333;
+    margin-top: 10px;
+  }
+  
+  .date {
+    font-size: 0.9em;
+    color: #fff;
+    font-weight: 300;
+    text-shadow: 0px 0px 5px rgba(0,0,0,0.2);
+    padding-top: 20px;
+    margin-bottom: 100px;
+  }
+  
+
+  .weather-info {
+    display: flex; 
+    justify-content: center;
+  }
+
+  .degreeCelsius {
+    font-size: 4em;
+    color: #fff;
+    font-weight: bold;
+    text-shadow: 0px 0px 5px rgba(0,0,0,0.2);
+  }
+
+  .metaDetails {
+    font-size: 1em;
+    color: #fff;
+    font-weight: 300;
+    text-shadow: 0px 0px 5px rgba(0,0,0,0.2);
+    padding-top: 20px;
+  }
+  
+  #weatherTagline {
+    font-size: 1.5em;
+    margin-top: 10px;
+    color: #fff;
+    text-shadow: 0px 0px 5px rgba(0,0,0,0.2);
+    font-weight: 300;
+    margin-bottom: 3em;
+}
+
+.iconWrap {
+  max-height: 18em;
+}
+
+.company-logo {
+  position: absolute;
+  bottom: -15px;
+  right: 20px;
+  width: 150px;
+  height: auto;
+}

@@ -1,19 +1,46 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Aghalee Weather and Water Temperature</title>
-    <!-- Add some CSS for styling here -->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aghalee Weather and Water Temperature</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <h1>Weather in Aghalee, Northern Ireland</h1>
-    <div id="weather">Loading weather data...</div>
+
+<div class="weather-app">
+    <div class="iconWrap">
+        <img id="weatherIcon" src="" alt="Weather Icon">
+    </div>
+    <div id="weatherTagline"></div>
+  <div class="weather-card">
+    <div class="metaDetails">Outside temperature</div>
+    <div class="weather-info">
+        
+      <div class="temperature" id="weather">Loading...</div>
+      <div class="degreeCelsius">°C</div>
+    </div>
     
-    <h1>Lake Water Temperature</h1>
-    <div id="waterTemp">Loading water temperature...</div>
 
-    <h1>Last Updated</h1>
-    <div id="lastUpdated">Loading update time...</div>
+    
+  </div>
+  
 
-    <script src="./script.js"></script>
+  <div class="water-temp-card">
+    <div class="metaDetails">Water temperature</div>
+    <div class="weather-info">
+      <div class="temperatureWater temperature" id="waterTemp">Loading...</div>
+      <div class="degreeCelsius">°C</div>
+    </div>
+    <div class="date" id="lastUpdated">Loading...</div>
+  </div>
+</div>
+
+<img src="logo.svg" alt="Moira Lakes Logo" class="company-logo">
+
+<script src="script.js"></script>
 </body>
 </html>
