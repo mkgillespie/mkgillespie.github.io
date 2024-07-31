@@ -1,6 +1,6 @@
 [
     {"category": "Hot Food", "items": [{"name": "Croissant", "price": "£2.50", "daysVisible": ["Saturday"]}, {"name": "Pain au chocolat", "price": "£2.00", "daysVisible": ["Saturday"]}, {"name": "Sausage Roll", "price": "£2.20", "daysVisible": ["Saturday"]}]},
-    {"category": "Hot Drinks", "items": [{"name": "Hot Chocolate", "price": "£2.00"}]},
+    {"category": "Hot Drinks", "items": [{"name": "Hot Chocolate", "price": "£3.00"}]},
     {"category": "Cold Drinks", "items": [{"name": "Cans", "price": "£1.50"}, {"name": "Water", "price": "£1.00"}]},
     {"category": "Snacks", "items": [{"name": "Haribo Tangfastics / Supermix", "price": "£2.20"}, {"name": "Pringles", "price": "£1.25"}, {"name": "Mars", "price": "£1.00"}]}
 ]
