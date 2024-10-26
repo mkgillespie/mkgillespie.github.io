@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Pumpkin Calculator</title>
+    <!-- Include PapaParse from CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/papaparse@5.3.1/papaparse.min.js"></script>
+    <style>
+        body { font-family: Arial, sans-serif; }
+        #result h2 { color: green; }
+    </style>
+</head>
+<body>
+    <h1>Pumpkin Calculator</h1>
+    <input type="file" id="fileInput" accept=".csv">
+    <button onclick="processFile()">Calculate Pumpkins</button>
+    <div id="result"></div>
+
+    <script>
+        function processFile() {
+            const fileInput = document.getElementById('fileInput');
+            const file = fileInput.files[0];
+
+            if (!file) {
+                alert('Please select a CSV file.');
+                return;
+            }
+
+            Papa.parse(file, {
+                header: true,
+                skipEmptyLines: true,
+                complete: function(results) {
+                    const totalPumpkins = calculateTotalPumpkins(results.data);
+                    displayResult(totalPumpkins);
+                },
+                error: function(err) {
+                    alert('Error parsing CSV file: ' + err.message);
+                }
+            });
+        }
+
+        function calculateTotalPumpkins(data) {
+            const relevantColumns = [
+                'addons',
+                'Child (3-15 years old 1 Pumpkin)',
+                'Toddler (1 - 2 years old 1 pumpkin)',
+                'Family of 4 (2 pumpkins At least 1 adult)',
+                'Family of 5 (3 pumpkins At least 1 adult)',
+                'Family of 5 (3 pumpkins)',
+                'Family of 6 (4 pumpkins At least 1 adult)'
+            ];
+
+            let totalPumpkins = 0;
+
+            data.forEach(row => {
+                // Calculate pumpkins from ticket types
+                relevantColumns.forEach(column => {
+                    if (column === 'addons') return;
+                    const ticketCount = parseInt(row[column]) || 0;
+                    const pumpkinsPerTicket = extractPumpkinsFromColumnName(column);
+                    totalPumpkins += ticketCount * pumpkinsPerTicket;
+                });
+
+                // Calculate extra pumpkins from addons
+                const addonsStr = row['addons'];
+                totalPumpkins += parseAddons(addonsStr);
+            });
+
+            return totalPumpkins;
+        }
+
+        function extractPumpkinsFromColumnName(columnName) {
+            const match = columnName.match(/(\d+)\s*pumpkins?/i);
+            if (match) {
+                return parseInt(match[1]);
+            } else if (columnName.match(/1\s*Pumpkin/i)) {
+                return 1;
+            } else {
+                return 0; // Default if no pumpkins are mentioned
+            }
+        }
+
+        function parseAddons(addonsStr) {
+            let extraPumpkins = 0;
+            if (!addonsStr) return 0;
+            const matches = addonsStr.match(/Extra Pumpkin: (\d+)/g);
+            if (matches) {
+                matches.forEach(match => {
+                    const num = parseInt(match.split(':')[1].trim());
+                    extraPumpkins += num;
+                });
+            }
+            return extraPumpkins;
+        }
+
+        function displayResult(totalPumpkins) {
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = `<h2>Total pumpkins needed: ${totalPumpkins}</h2>`;
+        }
+    </script>
+</body>
+</html>
